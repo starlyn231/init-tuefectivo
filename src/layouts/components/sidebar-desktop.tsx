@@ -3,6 +3,7 @@
 import { SidebarButton } from './sidebar-button';
 
 import img from '@/assets/logo.png'
+import logoWhite from '@/assets/logo-white.png'
 import { Separator } from '@/components/ui/separator';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
@@ -12,13 +13,8 @@ import { LogOut, MoreHorizontal, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SidebarItems } from './types';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubItem } from '@/components/ui/sidebar';
+
+import {  SidebarMenuSub, SidebarMenuSubItem } from '@/components/ui/sidebar';
 import { Collapsible, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { CollapsibleContent } from '@radix-ui/react-collapsible';
 interface SidebarDesktopProps {
@@ -29,11 +25,11 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
   const location = useLocation();
   const pathname = location.pathname;
   return (
-    <aside className='flex bg-white min-h-screen border-r border-gray-200 '  >
+    <aside className='flex bg-primary h-full border-r border-gray-200 '  >
       <div className=' px-3 py-4'>
      
         <Link to="/" className="flex items-center gap-2 font-semibold">
-              <img src={img} alt="WorldWide Group" className="h-10 w-auto" />
+              <img src={logoWhite} alt="WorldWide Group" className="h-10 w-auto" />
             </Link>
         <div className='mt-5'>
         {props.sidebarItems.links.map((link, index) => {
@@ -42,9 +38,9 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
         
               <CollapsibleTrigger asChild>
                 <SidebarButton
-                  variant={pathname === link.href ? 'secondary' : 'ghost'}
+                  variant={pathname === link.href ? 'primary' : 'ghost'}
                   icon={link.icon}
-                  className="w-full"
+                  className="w-full hover:bg-secondary"
                          
                 >
                   {/* <link.icon className="h-5 w-5" /> */}
@@ -52,13 +48,13 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
                 </SidebarButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <SidebarMenuSub className="pl-6">
+                <SidebarMenuSub className="pl-6 ">
                   {link.collapse.map((sublink, subIndex) => (
-                    <SidebarMenuSubItem key={subIndex}>
+                    <SidebarMenuSubItem key={subIndex} className='rounded hover:bg-secondary'>
                       <Link
                         to={sublink.href}
-                        className={`block py-2 px-3 rounded hover:bg-gray-700 ${
-                          pathname === sublink.href ? 'bg-gray-100' : ''
+                        className={`block py-2 px-3 text-white  ${
+                          pathname === sublink.href ? 'rounded bg-ligthblue' : ''
                         }`}
                       >
                         {sublink.label}
@@ -83,7 +79,7 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
         })}
 
 {props.sidebarItems.extras && <div className="mt-5">{props.sidebarItems.extras}</div>}
-          <div className='absolute bottom-3 px-3'>
+          {/* <div className='absolute bottom-3 px-3'>
             <Separator className='absolute -top-3 left-0 w-full' />
             <Popover>
               <PopoverTrigger asChild>
@@ -113,7 +109,7 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
                 </div>
               </PopoverContent>
             </Popover>
-          </div>
+          </div> */}
         </div>
       </div>
     </aside>

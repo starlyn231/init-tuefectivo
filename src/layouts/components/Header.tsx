@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import img from '@/assets/logo.png'
+import img from "@/assets/logo.png";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,82 +6,129 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { CircleUser, Menu } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import {
+  CircleUser,
+  LogOut,
+  Menu,
+  MoreHorizontal,
+  Settings
+} from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Separator } from "@/components/ui/separator";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger
+} from "@/components/ui/sheet";
 
-
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { sidebarItems } from './sidebar';
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { sidebarItems } from "./sidebar";
+import { SidebarButton } from "./sidebar-button";
 
 function Header() {
-  const [userProfile, setUserProfile] = useState<any>();
 
+  const location = useLocation();
+  const pathname = location.pathname;
+  useEffect(() => {}, []);
 
-  useEffect(() => {
-  
-  }, []);
+  function handleLogout() {}
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  function handleLogout() {
-  
-  }
+  const closeMenu = () => setIsMenuOpen(false);
 
-  const renderedLinks = sidebarItems.links.map((link) => {
-    return (
-      <div key={link.accessKey} className=" w-full">
-        <div className="flex items-center gap-3 rounded-lg px-3 py-1 text-white transition-all ">
-          {link?.label}
-        </div>
-        {link.subLinks && (
-          <div className="ml-6">
-            {link.subLinks.map((subLink) => {
-              return (
-                <Link
-                  key={subLink.accessKey}
-                  to={subLink.path}
-                  className="flex items-center gap-3 rounded-lg px-2 py-2 text-white transition-all hover:text-sky-300 text-sm"
-                >
-                  <subLink.icon className="h-4 w-4" />
-                  {subLink.label}
-                </Link>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    );
-  });
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[58px] lg:px-6 w-full">
-      <Sheet>
+      <Sheet isOpen={isMenuOpen} onOpenChange={setIsMenuOpen}>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-            <Menu className="h-5 w-5 text-white" />
+          <Button size="icon" variant="ghost" 
+          className="fixed top-3 left-3 h-12 w-12 md:hidden text-tertiary "
+          onClick={() => setIsMenuOpen(true)}
+          >
+            <Menu size={30} />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="flex flex-col bg-[#264e72]">
-          <nav className="grid gap-2 text-lg font-medium">
-            <Link to="#" className="flex items-center gap-2 text-lg font-semibold">
-              <img src={img} alt="WorldWide Group" className="h-8 w-auto" />
-              {/* <img src={img} alt="WorldWide Group" className="h-6 w-auto" /> */}
-              {/* <span className="">WorldWide Group</span> */}
-              {/* <span className="sr-only">WorldWide Group</span> */}
-              <span className="sr-only">WorldWide Group</span>
-            </Link>
-            {renderedLinks}
-          </nav>
-          <div className="mt-auto"></div>
+        <SheetContent side="left" className="px-3 py-4 bg-primary" hideClose>
+          <SheetHeader className="flex flex-row justify-between items-center space-y-0">
+            <span className="text-lg font-semibold text-foreground mx-3">
+              <Link to="/" className="flex items-center gap-2 font-semibold">
+                <img src={img} alt=" Group" className="h-10 w-auto" />
+              </Link>
+            </span>
+            {/* <SheetClose asChild>
+              <Button className="h-7 w-7 p-0" variant="ghost">
+                <X size={15} />
+              </Button>
+            </SheetClose> */}
+          </SheetHeader>
+          <div className="h-full">
+            <div className="mt-5 flex flex-col w-full gap-1">
+              {sidebarItems.links.map((link, idx) => (
+                <Link key={idx} to={link.href}>
+                  <SidebarButton
+                    variant={pathname === link.href ? "secondary" : "ghost"}
+                    icon={link.icon}
+                    className="w-full"
+                  >
+                    {link.label}
+                  </SidebarButton>
+                </Link>
+              ))}
+              {sidebarItems.extras}
+            </div>
+            <div className="absolute w-full  bottom-4 px-1 left-0">
+              <Separator className="absolute -top-3 left-0 w-full" />
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <Button variant="ghost" className="w-full justify-start">
+                    <div className="flex justify-between items-center w-full">
+                      <div className="flex gap-2">
+                        <Avatar className="h-5 w-5">
+                          <AvatarImage src="https://github.com/max-programming.png" />
+                          <AvatarFallback>Max Programming</AvatarFallback>
+                        </Avatar>
+                        <span>example</span>
+                      </div>
+                      <MoreHorizontal size={20} />
+                    </div>
+                  </Button>
+                </DrawerTrigger>
+                <DrawerContent className="mb-2 p-2">
+                  <div className="flex flex-col space-y-2 mt-2">
+                    <Link to="/">
+                      <SidebarButton
+                        size="sm"
+                        icon={Settings}
+                        className="w-full"
+                      >
+                        Account Settings
+                      </SidebarButton>
+                    </Link>
+                    <SidebarButton size="sm" icon={LogOut} className="w-full">
+                      Log Out
+                    </SidebarButton>
+                  </div>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          </div>
         </SheetContent>
       </Sheet>
-   
+
       {/* {isAuthenticated && <div>{userProfile?.username}</div>} */}
       <div className="flex-grow"></div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondary" size="icon" className="rounded-full">
+          <Button
+            variant="secondary"
+            size="icon"
+            className="rounded-full bg-primary"
+          >
             <CircleUser className="h-5 w-5 " />
           </Button>
         </DropdownMenuTrigger>
@@ -90,7 +136,9 @@ function Header() {
           <DropdownMenuLabel>Cuenta</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link to={`/users/profile/${userProfile?.localAccountId}`}>Opciones</Link>
+            <Link to={`/users/profile/star`}>
+              Opciones
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           {/* {isAuthenticated ? (

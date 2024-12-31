@@ -18,20 +18,30 @@ module.exports = {
 	  },
 	  extend: {
 		colors: {
-		  ligthblue: '#075985',
+		  ligthblue:'#007bff',
 		  border: 'hsl(var(--border))',
 		  input: 'hsl(var(--input))',
 		  ring: 'hsl(var(--ring))',
 		  background: 'hsl(var(--background))',
 		  foreground: 'hsl(var(--foreground))',
 		  primary: {
-			DEFAULT: 'hsl(var(--primary))',
-			foreground: 'hsl(var(--primary-foreground))',
+			DEFAULT: '#264e72', // Color base
+			foreground: '#ffffff', // Color del texto (por ejemplo, blanco para contraste)
+			hover: '#1b3a57', // Color para hover (tono más oscuro)
+			background: '#e1eff5', // Fondo asociado al primary
 		  },
 		  secondary: {
-			DEFAULT: 'hsl(var(--secondary))',
-			foreground: 'hsl(var(--secondary-foreground))',
+			DEFAULT: '#007bff', // Color azul base
+			foreground: '#ffffff', // Color del texto
+			hover: '#0056b3', // Color para hover (tono más oscuro)
+			background: '#cce4ff', // Fondo asociado al secondary
 		  },
+		       tertiary: {
+          DEFAULT: '#f89420', // Color base
+          foreground: '#ffffff', // Texto sobre fondo terciario
+          hover: '#d67c1a', // Color para hover (tono más oscuro)
+          background: '#ffe4c0', // Fondo asociado al terciario
+        },
 		  destructive: {
 			DEFAULT: 'hsl(var(--destructive))',
 			foreground: 'hsl(var(--destructive-foreground))',

@@ -27,7 +27,7 @@ export const fileQueryColumns: Column[] = [
     render: (row) => (
       <span
         className={`${
-          row.status === "Activo" ? "text-green-600" : "text-red-600"
+          row.status === "Procesado" ? "text-[#007bff] font-bold" : "text-red-600"
         }`}
       >
         {row.status}
@@ -45,23 +45,25 @@ export const fileQueryColumns: Column[] = [
     render: (row) => (
       <Link
         to={`/detalle/${row.id}`}
-        className="text-[#00aef0] underline"
+        className="text-[#00aef0] underline text-lg"
       >
-        Ver Detalle
+        Ver Transacciones
       </Link>
     ),
   },
 ];
 export const mockData = [
-  { id: 1, name: "Archivo A", client: "Cliente 1", status: "Activo", date: "2024-12-01" },
+  { id: 1, name: "Archivo A", client: "Cliente 1", status: "Procesado", date: "2024-12-01" },
   { id: 2, name: "Archivo B", client: "Cliente 2", status: "Inactivo", date: "2024-12-02" },
-  { id: 3, name: "Archivo C", client: "Cliente 3", status: "Activo", date: "2024-12-03" },
+  { id: 3, name: "Archivo C", client: "Cliente 3", status: "Leido", date: "2024-12-03" },
+  { id: 4, name: "Archivo D", client: "Cliente 4", status: "Ninguno", date: "2024-12-03" },
 ];
 
 export const UserSchema = z.object({
   nameFile: z.string({ required_error: 'El fichero es requerido' }).min(5).trim(),
   customerName: z.string({ required_error: 'El Nombre es requerdo' }).min(5).trim(),
-  status: z.string({ required_error: 'Estado es requerdo' }).trim(),
+
   dateincome: z.string({ required_error: 'La fecha es requerdo' }).min(5).trim(),
 
+  status: z.string().trim().nonempty({ message: "Gender is required" }),
 });

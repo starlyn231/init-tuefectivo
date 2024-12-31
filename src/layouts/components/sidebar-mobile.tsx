@@ -30,7 +30,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
   const pathname = location.pathname;
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      {/* <SheetTrigger asChild>
         <Button size='icon' variant='ghost' className='fixed top-3 left-3'>
           <Menu size={20} />
         </Button>
@@ -96,7 +96,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
             </Drawer>
           </div>
         </div>
-      </SheetContent>
+      </SheetContent> */}
     </Sheet>
   );
 }
